@@ -1,21 +1,26 @@
 package com.brainext.apps.factchecker;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.brainext.apps.factchecker.datamodel.CheckedStatement;
 
 @RestController
 public class AppController {
 	@Autowired
 	private FactCheckerService factCheckerService;
 
-	@RequestMapping("/apps/factchecker")
+	@RequestMapping("/apps/factChecker")
 	public String index() {
 		return "Greetings from the FactChecker app!";
 	}
 
-	@RequestMapping("/apps/factchecker/checkStatements")
-	public String checkStatements() {
-		return Boolean.toString(factCheckerService.checkStatements());
+	@RequestMapping("/apps/factChecker/validateStatements")
+	public List<CheckedStatement> validateStatements(@RequestParam(value="text") String text) {
+		return factCheckerService.validateStatements(text);
 	}
 }
