@@ -16,6 +16,7 @@ import com.brainext.apps.factchecker.datamodel.CheckedStatement;
  */
 @Service
 public class FactCheckerService {
+	@SuppressWarnings("unused")
 	private RestTemplate restTemplate;
 
 	/**
