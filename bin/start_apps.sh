@@ -5,7 +5,7 @@ STANBOL_STABLE_LAUNCHER="launchers/stable/target"
 STANBOL_RUNTIME_HOME=stanbol
 STANFORD_CONFIG=config
 STANFORD_NLP_LAUNCHER="server/target"
-
+BRAIN_EXT_SERVER_LAUNCHER="../web/target"
 MAX_RETRIES=100
 
 if [ -z "$STANBOL_HOME" ]
@@ -29,6 +29,12 @@ fi
 if [ ! -d "$STANFORD_NLP_HOME/$STANFORD_NLP_LAUNCHER" ]
 then
 	printf "[ERROR] Stanford nlp for Stanbol has not been compiled."
+	exit 1
+fi
+
+if [ ! -d "$BRAIN_EXT_SERVER_LAUNCHER" ]
+then
+	printf "[ERROR] Brain Extension Server has not been compiled."
 	exit 1
 fi
 
@@ -122,5 +128,10 @@ while true; do
 done
 
 printf "\nStanbol started\n"
+
+printf "Starting Brain Extension server"
+java -jar -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1045 $BRAIN_EXT_SERVER_LAUNCHER/web-1.0.0.jar > brain-ext.out 2>&1 &
+printf $! > brain-ext.pid
+printf "\nBrain Extension Server started\n"
 
 printf "Brain Extension Framework READY"

@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+if [ -f brain-ext.pid ]; then
+    printf "Stopping brain extension server\n"
+	BRAIN_EXT_PID=`cat stanbol.pid`
+	kill -1 $BRAIN_EXT_PID
+	printf "Brain extension server stopped\n"
+	rm -rf brain-ext.pid
+fi
+
 if [ -f stanbol.pid ]; then
     printf "Stopping stanbol\n"
 	STANBOL_PID=`cat stanbol.pid`
@@ -23,6 +31,10 @@ fi
 
 if [ -f stanbol.out ]; then
 	rm -rf stanbol.out
+fi
+
+if [ -f brain-ext.out ]; then
+	rm -rf brain-ext.out
 fi
 
 printf "Brain Extension Framework STOPPED"
