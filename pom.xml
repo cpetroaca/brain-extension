@@ -8,6 +8,7 @@
 	<packaging>pom</packaging>
 	
 	<modules>
+		<module>core</module>
 		<module>apps</module>
 		<module>web</module>    
 	</modules>
