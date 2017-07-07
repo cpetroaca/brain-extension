@@ -3,7 +3,7 @@ set -e
 
 if [ -f brain-ext.pid ]; then
     printf "Stopping brain extension server\n"
-	BRAIN_EXT_PID=`cat stanbol.pid`
+	BRAIN_EXT_PID=`cat brain-ext.pid`
 	kill -1 $BRAIN_EXT_PID
 	printf "Brain extension server stopped\n"
 	rm -rf brain-ext.pid
