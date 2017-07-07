@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.brainext.apps.factchecker.datamodel.CheckedStatement;
-
 /**
  * Main controller for the fact checker app
  * 
@@ -26,7 +24,7 @@ public class AppController {
 	}
 
 	@RequestMapping("/apps/factChecker/validateStatements")
-	public List<CheckedStatement> validateStatements(@RequestParam(value = "text") String text) {
+	public List<CheckedStatement> validateStatements(@RequestParam(value = "text") String text) throws Exception {
 		return factCheckerService.validateStatements(text);
 	}
 }

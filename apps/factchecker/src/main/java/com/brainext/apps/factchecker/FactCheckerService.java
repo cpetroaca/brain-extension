@@ -2,8 +2,6 @@ package com.brainext.apps.factchecker;
 
 import java.util.List;
 
-import com.brainext.apps.factchecker.datamodel.CheckedStatement;
-
 /**
  * Performs business logic wrt checking veridity of statements
  * 
@@ -18,5 +16,5 @@ public interface FactCheckerService {
 	 * @param text
 	 * @return
 	 */
-	public List<CheckedStatement> validateStatements(String text);
+	public List<CheckedStatement> validateStatements(String text) throws FactCheckerException;
 }

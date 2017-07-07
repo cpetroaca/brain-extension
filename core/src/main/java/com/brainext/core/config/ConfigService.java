@@ -1,4 +1,4 @@
-package com.brainext.core;
+package com.brainext.core.config;
 
 /**
  * Common service for storing configuration parameters that can be used across all apps

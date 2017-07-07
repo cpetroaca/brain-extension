@@ -1,9 +1,7 @@
-package com.brainext.core.impl;
+package com.brainext.core.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import com.brainext.core.ConfigService;
 
 @Service
 class ConfigServiceImpl implements ConfigService {

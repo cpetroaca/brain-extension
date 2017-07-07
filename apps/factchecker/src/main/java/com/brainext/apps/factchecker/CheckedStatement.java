@@ -1,4 +1,4 @@
-package com.brainext.apps.factchecker.datamodel;
+package com.brainext.apps.factchecker;
 
 /**
  * The result of checking a statement

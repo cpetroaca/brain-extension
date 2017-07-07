@@ -1,4 +1,8 @@
-package com.brainext.core;
+package com.brainext.core.nlp;
+
+import java.util.List;
+
+import com.brainext.core.CoreServiceException;
 
 /**
  * Service that performs Natural Language Processing tasks
@@ -13,5 +17,5 @@ public interface NlpService {
 	 * @param text
 	 * @return
 	 */
-	public String getRelations(String text);
+	public List<Relation> getRelations(String text) throws CoreServiceException;
 }
