@@ -1,4 +1,4 @@
-package com.brainext.core.nlp.converters;
+package com.brainext.core.converters;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.brainext.core.AbstractConverter;
 import com.brainext.core.nlp.Relation;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;

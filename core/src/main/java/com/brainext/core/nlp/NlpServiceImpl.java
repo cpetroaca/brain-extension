@@ -11,7 +11,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.brainext.core.CoreServiceException;
 import com.brainext.core.config.ConfigService;
-import com.brainext.core.nlp.converters.RelationConverter;
+import com.brainext.core.converters.RelationConverter;
 
 /**
  * Nlp Service implementation which uses Apache Stanbol for NLP tasks

@@ -2,11 +2,14 @@ package com.brainext.apps.factchecker;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.brainext.core.CoreServiceException;
+import com.brainext.core.kb.Entity;
+import com.brainext.core.kb.KnowledgeBaseService;
 import com.brainext.core.nlp.NlpService;
 import com.brainext.core.nlp.Relation;
 
@@ -20,12 +23,26 @@ import com.brainext.core.nlp.Relation;
 class FactCheckerServiceImpl implements FactCheckerService {
 	@Autowired
 	private NlpService nlpService;
+	
+	@Autowired
+	private KnowledgeBaseService kbService;
 
 	@Override
 	public List<CheckedStatement> validateStatements(String text) throws FactCheckerException {
-		List<Relation> relations = null;
 		try {
-			relations = nlpService.getRelations(text);
+			List<Relation> relations = nlpService.getRelations(text);
+			
+			for (Relation relation : relations) {
+				for (String entityId : relation.getEntities()) {
+					Entity entity = kbService.getEntity(entityId);
+					if (entity != null) {
+						Set<String> propValues = entity.getStringProperty(relation.getType());
+						if (propValues != null) {
+							propValues.size();
+						}
+					}
+				}
+			}
 		} catch (CoreServiceException e) {
 			throw new FactCheckerException(e);
 		}
