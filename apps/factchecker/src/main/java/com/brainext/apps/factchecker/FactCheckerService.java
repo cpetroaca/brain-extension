@@ -16,5 +16,5 @@ public interface FactCheckerService {
 	 * @param text
 	 * @return
 	 */
-	public List<CheckedStatement> validateStatements(String text) throws FactCheckerException;
+	public List<CheckedRelation> validate(String text) throws FactCheckerException;
 }

@@ -1,7 +1,6 @@
 package com.brainext.apps.factchecker;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,7 +23,7 @@ public class AppController {
 	}
 
 	@RequestMapping("/apps/factChecker/validateStatements")
-	public List<CheckedStatement> validateStatements(@RequestParam(value = "text") String text) throws Exception {
-		return factCheckerService.validateStatements(text);
+	public List<CheckedRelation> validateStatements(@RequestParam(value = "text") String text) throws Exception {
+		return factCheckerService.validate(text);
 	}
 }

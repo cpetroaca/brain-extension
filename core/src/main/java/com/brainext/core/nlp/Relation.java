@@ -1,6 +1,6 @@
 package com.brainext.core.nlp;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * A semantic relation between two or more entities
@@ -22,9 +22,9 @@ public class Relation {
 	/**
 	 * The set of entities participating in the relation
 	 */
-	private Set<String> entities;
+	private List<String> entities;
 
-	public Relation(String type, double confidence, Set<String> entities) {
+	public Relation(String type, double confidence, List<String> entities) {
 		if (type == null) {
 			throw new IllegalArgumentException("type cannot be null");
 		}
@@ -58,7 +58,7 @@ public class Relation {
 	 * 
 	 * @return the set of entities participating in the relation
 	 */
-	public Set<String> getEntities() {
+	public List<String> getEntities() {
 		return entities;
 	}
 
