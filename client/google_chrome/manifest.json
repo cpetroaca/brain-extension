@@ -1,0 +1,23 @@
+{
+  "manifest_version": 2,
+
+  "name": "Fact Checker",
+  "description": "This extension checks the text on a web page and determines whether the contained statements are true or not",
+  "version": "1.0",
+
+  "permissions": [
+    "contextMenus",
+    "http://localhost:8082/"
+  ],
+  
+  "background": {
+    "scripts": ["background.js"]
+  },
+  
+  "content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["script.js"]
+		}
+	]
+}
