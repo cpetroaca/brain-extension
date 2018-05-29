@@ -9,7 +9,7 @@
 	
 	<modules>
 		<module>core</module>
-		<module>apps</module>
+		<module>factchecker</module>
 		<module>web</module>    
 	</modules>
 	
