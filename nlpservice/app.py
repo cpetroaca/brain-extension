@@ -22,4 +22,5 @@ def get_relations():
         
     return json.dumps(relation_list, cls=RelationEncoder)
 
-app.run(debug=False)
+if __name__ == "__main__":
+	app.run(host='0.0.0.0', port=80)
