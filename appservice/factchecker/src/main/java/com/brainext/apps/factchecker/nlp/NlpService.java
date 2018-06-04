@@ -1,6 +1,8 @@
-package com.brainext.core.nlp;
+package com.brainext.apps.factchecker.nlp;
 
 import java.util.List;
+
+import com.brainext.apps.factchecker.FactCheckerException;
 
 /**
  * Service that performs Natural Language Processing tasks
@@ -15,5 +17,5 @@ public interface NlpService {
 	 * @param text
 	 * @return
 	 */
-	public List<Relation> getRelations(String text);
+	public List<Relation> getRelations(String text) throws FactCheckerException;
 }

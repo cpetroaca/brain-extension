@@ -7,11 +7,10 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.brainext.core.CoreServiceException;
-import com.brainext.core.kb.Entity;
-import com.brainext.core.kb.KnowledgeBaseService;
-import com.brainext.core.nlp.NlpService;
-import com.brainext.core.nlp.Relation;
+import com.brainext.apps.factchecker.kb.Entity;
+import com.brainext.apps.factchecker.kb.KnowledgeBaseService;
+import com.brainext.apps.factchecker.nlp.NlpService;
+import com.brainext.apps.factchecker.nlp.Relation;
 
 /**
  * Handles fact checking activities
@@ -31,33 +30,29 @@ class FactCheckerServiceImpl implements FactCheckerService {
 	public List<CheckedRelation> validate(String text) throws FactCheckerException {
 		List<CheckedRelation> checkedRelations = new ArrayList<>();
 
-		try {
-			List<Relation> relations = nlpService.getRelations(text);
+		List<Relation> relations = nlpService.getRelations(text);
 
-			for (Relation relation : relations) {
-				/*
-				 * TODO - have a formal representation for a subject and its
-				 * objects rather than assume the subject is the first entity.
-				 */
-				List<String> entities = relation.getEntities();
-				String subjectEntityId = entities.get(0);
-				List<String> objectEntityIds = entities.subList(1, entities.size());
+		for (Relation relation : relations) {
+			/*
+			 * TODO - have a formal representation for a subject and its
+			 * objects rather than assume the subject is the first entity.
+			 */
+			List<String> entities = relation.getEntities();
+			String subjectEntityId = entities.get(0);
+			List<String> objectEntityIds = entities.subList(1, entities.size());
 
-				Entity entity = kbService.getEntity(subjectEntityId);
-				if (entity != null) {
-					Set<String> propValues = entity.getStringProperty(relation.getType());
+			Entity entity = kbService.getEntity(subjectEntityId);
+			if (entity != null) {
+				Set<String> propValues = entity.getStringProperty(relation.getType());
 
-					if (propValues != null && propValues.containsAll(objectEntityIds)) {
-						checkedRelations.add(new CheckedRelation(relation, true));
-					} else {
-						checkedRelations.add(new CheckedRelation(relation, false));
-					}
+				if (propValues != null && propValues.containsAll(objectEntityIds)) {
+					checkedRelations.add(new CheckedRelation(relation, true));
+				} else {
+					checkedRelations.add(new CheckedRelation(relation, false));
 				}
 			}
-		} catch (CoreServiceException e) {
-			throw new FactCheckerException(e);
 		}
-
+		
 		return checkedRelations;
 	}
 }

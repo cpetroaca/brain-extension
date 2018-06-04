@@ -5,11 +5,12 @@
 	
 	<parent>
 		<groupId>com.brainext</groupId>
-		<artifactId>parent</artifactId>
+		<artifactId>apps</artifactId>
 		<version>1.0.0</version>
 	</parent>
-
-    <artifactId>core</artifactId>
+	
+    <groupId>com.brainext.apps</groupId>
+    <artifactId>eventgraph</artifactId>
 	<packaging>jar</packaging>
 	
 	<dependencies>
@@ -20,9 +21,15 @@
 		</dependency>
 		
 		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+		
+		<dependency>
+			<groupId>com.brainext</groupId>
+			<artifactId>core</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 	</dependencies>
 </project>

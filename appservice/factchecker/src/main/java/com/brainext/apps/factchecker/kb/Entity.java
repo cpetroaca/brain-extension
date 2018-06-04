@@ -1,4 +1,4 @@
-package com.brainext.core.kb;
+package com.brainext.apps.factchecker.kb;
 
 import java.util.Map;
 import java.util.Set;

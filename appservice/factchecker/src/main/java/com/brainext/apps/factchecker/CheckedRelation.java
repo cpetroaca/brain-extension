@@ -1,8 +1,9 @@
 package com.brainext.apps.factchecker;
 
 import java.util.List;
+
+import com.brainext.apps.factchecker.nlp.Relation;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.brainext.core.nlp.Relation;
 
 /**
  * A relation which was checked for truthfulness

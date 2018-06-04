@@ -27,7 +27,7 @@
 		
 		<dependency>
 			<groupId>com.brainext.apps</groupId>
-			<artifactId>factchecker</artifactId>
+			<artifactId>eventgraph</artifactId>
 			<version>1.0.0</version>
 		</dependency>
     </dependencies>

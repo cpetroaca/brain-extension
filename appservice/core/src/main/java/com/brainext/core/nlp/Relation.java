@@ -1,9 +1,7 @@
 package com.brainext.core.nlp;
 
-import java.util.List;
-
 /**
- * A semantic relation between two or more entities
+ * A semantic relation between entities
  * 
  * @author cpetroaca
  *
@@ -14,28 +12,26 @@ public class Relation {
 	 */
 	private String type;
 
-	/**
-	 * The confidence with which we know it is this type of relation
-	 */
-	private double confidence;
+	private Entity subj;
+	
+	private Entity obj;
 
-	/**
-	 * The set of entities participating in the relation
-	 */
-	private List<String> entities;
-
-	public Relation(String type, double confidence, List<String> entities) {
-		if (type == null) {
-			throw new IllegalArgumentException("type cannot be null");
+	public Relation(String type, Entity subj, Entity obj) {
+		if (type == null || type.isEmpty()) {
+			throw new IllegalArgumentException("type cannot be null or empty");
 		}
 
-		if (entities == null || entities.isEmpty()) {
-			throw new IllegalArgumentException("entities cannot be null or empty");
+		if (subj == null) {
+			throw new IllegalArgumentException("subj cannot be null");
+		}
+		
+		if (obj == null) {
+			throw new IllegalArgumentException("obj cannot be null");
 		}
 
 		this.type = type;
-		this.confidence = confidence;
-		this.entities = entities;
+		this.subj = subj;
+		this.obj = obj;
 	}
 
 	/**
@@ -48,27 +44,27 @@ public class Relation {
 
 	/**
 	 * 
-	 * @return the relation confidence
+	 * @return relation subject
 	 */
-	public double getConfidence() {
-		return confidence;
+	public Entity getSubj() {
+		return subj;
 	}
-
+	
 	/**
 	 * 
-	 * @return the set of entities participating in the relation
+	 * @return relation object
 	 */
-	public List<String> getEntities() {
-		return entities;
+	public Entity getObj() {
+		return obj;
 	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + type.hashCode();
-		result = prime * result + Double.valueOf(confidence).hashCode();
-		result = prime * result + entities.hashCode();
+		result = prime * result + subj.hashCode();
+		result = prime * result + obj.hashCode();
 		return result;
 	}
 
@@ -83,7 +79,7 @@ public class Relation {
 
 		Relation other = (Relation) obj;
 
-		return (type.equals(other.type)) && (confidence == other.confidence) && (entities.equals(other.entities));
+		return (type.equals(other.type)) && (subj.equals(other.subj)) && (obj.equals(other.obj));
 	}
 
 	@Override
@@ -92,11 +88,11 @@ public class Relation {
 		sb.append("Type=");
 		sb.append(type);
 		sb.append(", ");
-		sb.append("Confidence=");
-		sb.append(confidence);
+		sb.append("Subj=");
+		sb.append(subj);
 		sb.append(", ");
-		sb.append("Entities=");
-		sb.append(entities);
+		sb.append("Obj=");
+		sb.append(obj);
 
 		return sb.toString();
 	}

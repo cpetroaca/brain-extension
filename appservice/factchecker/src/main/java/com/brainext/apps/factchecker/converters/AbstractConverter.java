@@ -1,4 +1,4 @@
-package com.brainext.core.converters;
+package com.brainext.apps.factchecker.converters;
 
 import java.io.IOException;
 

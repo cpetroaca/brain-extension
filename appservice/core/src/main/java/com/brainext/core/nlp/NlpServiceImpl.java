@@ -1,17 +1,15 @@
 package com.brainext.core.nlp;
 
-import java.io.IOException;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.brainext.core.CoreServiceException;
 import com.brainext.core.config.ConfigService;
-import com.brainext.core.converters.RelationConverter;
 
 /**
  * Nlp Service implementation which uses Apache Stanbol for NLP tasks
@@ -21,7 +19,7 @@ import com.brainext.core.converters.RelationConverter;
  */
 @Service
 class NlpServiceImpl implements NlpService {
-	private static final String RELATION_EXTRACTION_ENDPOINT = "enhancer/chain/relationextraction";
+	private static final String RELATION_EXTRACTION_ENDPOINT = "relations";
 
 	/**
 	 * Configuration Service
@@ -39,19 +37,12 @@ class NlpServiceImpl implements NlpService {
 	}
 
 	@Override
-	public List<Relation> getRelations(String text) throws CoreServiceException {
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("Accept", "application/json");
-		headers.set("Content-Type", "text/plain");
+	public List<Relation> getRelations(String text) {
+		Map<String, String> vars = new HashMap<>();
 
-		HttpEntity<String> entity = new HttpEntity<>(text, headers);
-		String response = restTemplate.postForObject(configService.getNlpServerUrl() + RELATION_EXTRACTION_ENDPOINT,
-				entity, String.class);
+		Relation[] response = restTemplate.getForObject(configService.getNlpServerUrl() + RELATION_EXTRACTION_ENDPOINT,
+				Relation[].class, vars);
 
-		try {
-			return new RelationConverter().parseJson(response);
-		} catch (IOException e) {
-			throw new CoreServiceException(e);
-		}
+		return Arrays.asList(response);
 	}
 }

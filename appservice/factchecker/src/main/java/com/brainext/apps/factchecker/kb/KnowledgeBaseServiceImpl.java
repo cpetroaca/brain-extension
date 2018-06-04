@@ -1,4 +1,4 @@
-package com.brainext.core.kb;
+package com.brainext.apps.factchecker.kb;
 
 import java.io.IOException;
 
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.brainext.core.CoreServiceException;
+import com.brainext.apps.factchecker.FactCheckerException;
+import com.brainext.apps.factchecker.converters.EntityConverter;
 import com.brainext.core.config.ConfigService;
-import com.brainext.core.converters.EntityConverter;
 
 @Service
 class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
@@ -31,7 +31,7 @@ class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 	}
 
 	@Override
-	public Entity getEntity(String id) throws CoreServiceException {
+	public Entity getEntity(String id) throws FactCheckerException {
 		StringBuilder url = new StringBuilder();
 		url.append(configService.getNlpServerUrl());
 		url.append(DBPEDIA_FACTS_ENDPOINT);
@@ -43,7 +43,7 @@ class KnowledgeBaseServiceImpl implements KnowledgeBaseService {
 		try {
 			return new EntityConverter().parseJson(response);
 		} catch (IOException e) {
-			throw new CoreServiceException(e);
+			throw new FactCheckerException(e);
 		}
 	}
 }

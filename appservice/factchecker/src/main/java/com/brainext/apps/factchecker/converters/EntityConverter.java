@@ -1,4 +1,4 @@
-package com.brainext.core.converters;
+package com.brainext.apps.factchecker.converters;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import com.brainext.core.kb.Entity;
+import com.brainext.apps.factchecker.kb.Entity;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 

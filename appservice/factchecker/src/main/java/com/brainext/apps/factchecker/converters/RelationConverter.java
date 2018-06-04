@@ -1,9 +1,10 @@
-package com.brainext.core.converters;
+package com.brainext.apps.factchecker.converters;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import com.brainext.core.nlp.Relation;
+
+import com.brainext.apps.factchecker.nlp.Relation;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 
