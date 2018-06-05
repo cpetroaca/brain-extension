@@ -17,6 +17,9 @@ public class Entity {
 	 */
 	private EntityType type;
 
+	public Entity() {
+	}
+	
 	public Entity(String text, EntityType type) {
 		if (text == null || text.isEmpty()) {
 			throw new IllegalArgumentException("text cannot be null or empty");

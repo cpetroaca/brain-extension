@@ -1,11 +1,14 @@
 package com.brainext.core.nlp;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -38,11 +41,20 @@ class NlpServiceImpl implements NlpService {
 
 	@Override
 	public List<Relation> getRelations(String text) {
-		Map<String, String> vars = new HashMap<>();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-		Relation[] response = restTemplate.getForObject(configService.getNlpServerUrl() + RELATION_EXTRACTION_ENDPOINT,
-				Relation[].class, vars);
+		StringBuilder urlBuilder = new StringBuilder();
+		urlBuilder.append(configService.getNlpServerUrl());
+		urlBuilder.append(RELATION_EXTRACTION_ENDPOINT);
+		urlBuilder.append("?");
+		urlBuilder.append("text=");
+		urlBuilder.append(text);
 
-		return Arrays.asList(response);
+		ResponseEntity<Relation[]> response = restTemplate.exchange(urlBuilder.toString(), HttpMethod.GET, entity,
+				Relation[].class);
+
+		return Arrays.asList(response.getBody());
 	}
 }

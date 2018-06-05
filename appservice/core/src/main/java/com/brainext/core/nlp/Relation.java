@@ -16,6 +16,9 @@ public class Relation {
 	
 	private Entity obj;
 
+	public Relation() {
+	}
+	
 	public Relation(String type, Entity subj, Entity obj) {
 		if (type == null || type.isEmpty()) {
 			throw new IllegalArgumentException("type cannot be null or empty");
@@ -88,11 +91,12 @@ public class Relation {
 		sb.append("Type=");
 		sb.append(type);
 		sb.append(", ");
-		sb.append("Subj=");
+		sb.append("[Subj=");
 		sb.append(subj);
-		sb.append(", ");
-		sb.append("Obj=");
+		sb.append("], ");
+		sb.append("[Obj=");
 		sb.append(obj);
+		sb.append("]");
 
 		return sb.toString();
 	}
