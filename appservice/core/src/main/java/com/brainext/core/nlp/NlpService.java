@@ -15,5 +15,5 @@ public interface NlpService {
 	 * @param text
 	 * @return
 	 */
-	public List<Relation> getRelations(String text);
+	public List<RelationDto> getRelations(String text);
 }

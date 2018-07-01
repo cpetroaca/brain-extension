@@ -1,12 +1,12 @@
 package com.brainext.core.nlp;
 
 /**
- * Named entity
+ * Entity transfer object from NLP service endpoint
  * 
  * @author cpetroaca
  *
  */
-public class Entity {
+public class EntityDto {
 	/**
 	 * Entity text
 	 */
@@ -15,17 +15,17 @@ public class Entity {
 	/**
 	 * Entity type
 	 */
-	private EntityType type;
+	private String type;
 
-	public Entity() {
+	public EntityDto() {
 	}
-	
-	public Entity(String text, EntityType type) {
+
+	public EntityDto(String text, String type) {
 		if (text == null || text.isEmpty()) {
 			throw new IllegalArgumentException("text cannot be null or empty");
 		}
 
-		if (type == null) {
+		if (type == null || type.isEmpty()) {
 			throw new IllegalArgumentException("type cannot be null or empty");
 		}
 
@@ -45,10 +45,10 @@ public class Entity {
 	 * 
 	 * @return the entity type
 	 */
-	public EntityType getType() {
+	public String getType() {
 		return type;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -67,7 +67,7 @@ public class Entity {
 		if (getClass() != obj.getClass())
 			return false;
 
-		Entity other = (Entity) obj;
+		EntityDto other = (EntityDto) obj;
 
 		return (text.equals(other.text)) && (type.equals(other.type));
 	}

@@ -1,25 +1,24 @@
 package com.brainext.core.nlp;
 
 /**
- * A semantic relation between entities
- * 
+ * Relation transfer object from Nlp service
  * @author cpetroaca
  *
  */
-public class Relation {
+public class RelationDto {
 	/**
 	 * The type of relation
 	 */
 	private String type;
 
-	private Entity subj;
-	
-	private Entity obj;
+	private EntityDto subj;
 
-	public Relation() {
+	private EntityDto obj;
+
+	public RelationDto() {
 	}
-	
-	public Relation(String type, Entity subj, Entity obj) {
+
+	public RelationDto(String type, EntityDto subj, EntityDto obj) {
 		if (type == null || type.isEmpty()) {
 			throw new IllegalArgumentException("type cannot be null or empty");
 		}
@@ -27,7 +26,7 @@ public class Relation {
 		if (subj == null) {
 			throw new IllegalArgumentException("subj cannot be null");
 		}
-		
+
 		if (obj == null) {
 			throw new IllegalArgumentException("obj cannot be null");
 		}
@@ -49,18 +48,18 @@ public class Relation {
 	 * 
 	 * @return relation subject
 	 */
-	public Entity getSubj() {
+	public EntityDto getSubj() {
 		return subj;
 	}
-	
+
 	/**
 	 * 
 	 * @return relation object
 	 */
-	public Entity getObj() {
+	public EntityDto getObj() {
 		return obj;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,7 +79,7 @@ public class Relation {
 		if (getClass() != obj.getClass())
 			return false;
 
-		Relation other = (Relation) obj;
+		RelationDto other = (RelationDto) obj;
 
 		return (type.equals(other.type)) && (subj.equals(other.subj)) && (obj.equals(other.obj));
 	}
@@ -91,10 +90,11 @@ public class Relation {
 		sb.append("Type=");
 		sb.append(type);
 		sb.append(", ");
-		sb.append("[Subj=");
+		sb.append("Subj=[");
 		sb.append(subj);
-		sb.append("], ");
-		sb.append("[Obj=");
+		sb.append("]");
+		sb.append(", ");
+		sb.append("Obj=[");
 		sb.append(obj);
 		sb.append("]");
 

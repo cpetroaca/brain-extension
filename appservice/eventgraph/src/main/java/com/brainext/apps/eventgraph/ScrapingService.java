@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.brainext.core.nlp.NlpService;
-import com.brainext.core.nlp.Relation;
+import com.brainext.core.nlp.RelationDto;
 
 @Component
 class ScrapingService {
@@ -20,9 +20,9 @@ class ScrapingService {
 	
 	@Scheduled(fixedRate = 5000)
     public void scrapeEvents() {
-		List<Relation> relations = nlpService.getRelations("Barack Obama visited China. Microsoft bought Intel.");
+		List<RelationDto> relations = nlpService.getRelations("Barack Obama visited China. Microsoft bought Intel.");
 		LOGGER.info("Scraped events:");
-		for (Relation relation : relations) {
+		for (RelationDto relation : relations) {
 			LOGGER.info("Event: " + relation.toString());
 		}
     }
