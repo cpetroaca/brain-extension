@@ -8,6 +8,9 @@ class ConfigServiceImpl implements ConfigService {
 	@Value("${nlp.server.url}")
 	private String nlpServerUrl;
 	
+	@Value("${kb.server.url}")
+	private String kbServerUrl;
+	
 	/**
 	 * Get the NLP Server URL
 	 * @return
@@ -15,5 +18,10 @@ class ConfigServiceImpl implements ConfigService {
 	@Override
 	public String getNlpServerUrl() {
 		return nlpServerUrl;
+	}
+	
+	@Override
+	public String getKnowledgeBaseServerUrl() {
+		return kbServerUrl;
 	}
 }

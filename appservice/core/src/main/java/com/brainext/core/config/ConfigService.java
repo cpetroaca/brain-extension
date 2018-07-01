@@ -11,4 +11,6 @@ public interface ConfigService {
 	 * @return
 	 */
 	public String getNlpServerUrl();
+	
+	public String getKnowledgeBaseServerUrl();
 }

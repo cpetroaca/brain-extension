@@ -1,6 +1,7 @@
 package com.brainext.core.kb;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
@@ -44,13 +45,13 @@ public class Entity {
 	}
 
 	/**
-	 * Get Entities which are in the give relation with this Entity
+	 * Get relations
 	 * 
 	 * @param propertyName
 	 * @return
 	 */
-	public Set<Entity> getProperty(String relation) {
-		return relations.get(relation);
+	public Map<String, Set<Entity>> getRelations() {
+		return new HashMap<>(relations);
 	}
 
 	@Override

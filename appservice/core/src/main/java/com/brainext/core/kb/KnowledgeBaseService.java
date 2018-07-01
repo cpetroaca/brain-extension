@@ -1,5 +1,7 @@
 package com.brainext.core.kb;
 
+import java.util.Collection;
+
 /**
  * Service which accesses knowledge base entities
  * 
@@ -8,4 +10,6 @@ package com.brainext.core.kb;
  */
 public interface KnowledgeBaseService {
 	public Entity getEntity(String id);
+	
+	public Collection<Entity> getEntities();
 }
