@@ -28,4 +28,4 @@ def get_relations():
     return response
 
 if __name__ == "__main__":
-	app.run(host='0.0.0.0', port=80)
+	app.run(host='0.0.0.0', port=8082)
