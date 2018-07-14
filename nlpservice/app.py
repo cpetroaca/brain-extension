@@ -4,6 +4,7 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask import g
+from flask import abort
 
 from sophie import Extractor
 from encode import RelationEncoder
@@ -15,6 +16,9 @@ extractor = Extractor()
 @app.route("/relations")
 def get_relations():
     text = request.args.get('text');
+    if text is None:
+        abort(400)
+    
     relations = extractor.get_relations(text)
     
     relation_list = list()
@@ -26,6 +30,10 @@ def get_relations():
     response.headers['Content-Type'] = 'application/json'
     
     return response
+
+@app.errorhandler(400)
+def handle_bad_request(e):
+    return "{ 'error' : 'text attribute is missing'}", 400
 
 if __name__ == "__main__":
 	app.run(host='0.0.0.0', port=8082)
