@@ -1,4 +1,4 @@
-#!/bin/bash
+﻿#!/bin/bash
 
 docker build -t appservice appservice/web/
 
