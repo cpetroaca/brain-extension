@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import javax.annotation.PreDestroy;
@@ -15,6 +16,10 @@ import org.apache.jena.query.QueryExecution;
 import org.apache.jena.query.QueryExecutionFactory;
 import org.apache.jena.query.QuerySolution;
 import org.apache.jena.query.ResultSet;
+import org.apache.jena.update.UpdateExecutionFactory;
+import org.apache.jena.update.UpdateFactory;
+import org.apache.jena.update.UpdateProcessor;
+import org.apache.jena.update.UpdateRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +83,34 @@ class JenaKnowledgeBaseService implements KnowledgeBaseService {
 		}
 
 		return entities.values();
+	}
+
+	@Override
+	public void insertEntity(Entity entity) {
+		StringBuilder triplesString = new StringBuilder();
+		String subject = entity.getValue();
+		for (Entry<String, Set<Entity>> entry : entity.getRelations().entrySet()) {
+			for (Entity otherEntity : entry.getValue()) {
+				triplesString.append("<");
+				triplesString.append(subject);
+				triplesString.append(">");
+				triplesString.append(" ");
+				triplesString.append("<");
+				triplesString.append(entry.getKey());
+				triplesString.append(">");
+				triplesString.append(" ");
+				triplesString.append("<");
+				triplesString.append(otherEntity.getValue());
+				triplesString.append(">");
+				triplesString.append(" .");
+				triplesString.append("\n");
+			}
+		}
+
+		UpdateRequest update = UpdateFactory.create("INSERT DATA { " + triplesString.toString() + "}");
+		UpdateProcessor processor = UpdateExecutionFactory.createRemote(update,
+				configService.getKnowledgeBaseServerUrl() + "/update");
+		processor.execute();
 	}
 
 	@PreDestroy

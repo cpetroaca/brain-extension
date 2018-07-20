@@ -12,4 +12,6 @@ public interface KnowledgeBaseService {
 	public Entity getEntity(String id);
 	
 	public Collection<Entity> getEntities();
+	
+	public void insertEntity(Entity entity);
 }
