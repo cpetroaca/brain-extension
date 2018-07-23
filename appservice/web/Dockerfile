@@ -10,4 +10,4 @@ ADD target/web-1.0.0.jar /appservice/web-1.0.0.jar
 EXPOSE 8081
 
 # Run app.py when the container launches
-CMD ["java", "-jar", "/appservice/web-1.0.0.jar"]
+CMD ["java", "-jar", "-Dspring.profiles.active=prod", "/appservice/web-1.0.0.jar"]
