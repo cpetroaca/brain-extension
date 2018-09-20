@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.brainext.core.config.ConfigService;
+import com.brainext.core.kb.Relation;
 
 /**
  * Nlp Service implementation which uses Sophie endpoint
@@ -41,7 +42,7 @@ class SophieNlpService implements NlpService {
 	}
 
 	@Override
-	public List<RelationDto> getRelations(String text) {
+	public List<Relation> getRelations(String text) {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
 		HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
@@ -53,8 +54,8 @@ class SophieNlpService implements NlpService {
 		urlBuilder.append("text=");
 		urlBuilder.append(text);
 
-		ResponseEntity<RelationDto[]> response = restTemplate.exchange(urlBuilder.toString(), HttpMethod.GET, entity,
-				RelationDto[].class);
+		ResponseEntity<Relation[]> response = restTemplate.exchange(urlBuilder.toString(), HttpMethod.GET, entity,
+				Relation[].class);
 
 		return Arrays.asList(response.getBody());
 	}

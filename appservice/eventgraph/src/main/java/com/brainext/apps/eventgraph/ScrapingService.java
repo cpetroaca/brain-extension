@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.client.RestTemplate;
 
 import com.brainext.core.kb.KnowledgeBaseService;
+import com.brainext.core.kb.Relation;
 import com.brainext.core.nlp.NlpService;
-import com.brainext.core.nlp.RelationDto;
 
 /**
  * Service performing news site scraping
@@ -37,8 +37,9 @@ public abstract class ScrapingService {
 	public void scrape() {
 		String eventsText = scrapeEvents();
 		LOGGER.info("Scraped events text=" + eventsText);
-		List<RelationDto> relations = nlpService.getRelations(eventsText);
-		relations.stream().forEach((r) -> LOGGER.info("Relation=" + r.toString()));
+		List<Relation> relations = nlpService.getRelations(eventsText);
+		
+		kbService.insertRelations(relations);
 	}
 
 	/**

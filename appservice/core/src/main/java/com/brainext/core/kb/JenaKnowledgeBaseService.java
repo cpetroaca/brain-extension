@@ -2,12 +2,7 @@ package com.brainext.core.kb;
 
 import java.io.IOException;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
+import java.util.Collections;
 import javax.annotation.PreDestroy;
 
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -46,12 +41,12 @@ class JenaKnowledgeBaseService implements KnowledgeBaseService {
 	}
 
 	@Override
-	public Collection<Entity> getEntities() {
+	public Collection<Relation> getRelations() {
 		QueryExecution q = QueryExecutionFactory.sparqlService(configService.getKnowledgeBaseServerUrl(),
 				"SELECT ?subject ?predicate ?object WHERE {?subject ?predicate ?object}", httpClient);
 
 		ResultSet results = q.execSelect();
-		Map<String, Entity> entities = new HashMap<>();
+		Collection<Relation> relations = Collections.emptyList();
 
 		while (results.hasNext()) {
 			QuerySolution soln = results.nextSolution();
@@ -59,54 +54,35 @@ class JenaKnowledgeBaseService implements KnowledgeBaseService {
 			String predicate = soln.get("predicate").asResource().getURI();
 			String object = soln.get("object").asResource().getURI();
 
-			Entity entity = entities.get(subject);
-			if (entity == null) {
-				Map<String, Set<Entity>> relations = new HashMap<>();
-				Set<Entity> relationEntities = new HashSet<>();
-				relationEntities.add(new Entity(object));
-				relations.put(predicate, relationEntities);
-				entities.put(subject, new Entity(subject, relations));
-			} else {
-				Map<String, Set<Entity>> relations = entity.getRelations();
-				if (!relations.containsKey(predicate)) {
-					Set<Entity> relationEntities = new HashSet<>();
-					relationEntities.add(new Entity(object));
-					relations.put(predicate, relationEntities);
-					entities.put(subject, new Entity(subject, relations));
-				} else {
-					Set<Entity> relationEntities = relations.get(predicate);
-					relationEntities.add(new Entity(object));
-					relations.put(predicate, relationEntities);
-					entities.put(subject, new Entity(subject, relations));
-				}
-			}
+			Entity subjectEntity = new Entity(subject);
+			Entity objectEntity = new Entity(object);
+			relations.add(new Relation(predicate, subjectEntity, objectEntity));
 		}
 
-		return entities.values();
+		return relations;
 	}
 
 	@Override
-	public void insertEntity(Entity entity) {
+	public void insertRelations(Collection<Relation> relations) {
 		StringBuilder triplesString = new StringBuilder();
-		String subject = entity.getValue();
-		for (Entry<String, Set<Entity>> entry : entity.getRelations().entrySet()) {
-			for (Entity otherEntity : entry.getValue()) {
-				triplesString.append("<");
-				triplesString.append(subject);
-				triplesString.append(">");
-				triplesString.append(" ");
-				triplesString.append("<");
-				triplesString.append(entry.getKey());
-				triplesString.append(">");
-				triplesString.append(" ");
-				triplesString.append("<");
-				triplesString.append(otherEntity.getValue());
-				triplesString.append(">");
-				triplesString.append(" .");
-				triplesString.append("\n");
-			}
+		
+		for (Relation relation : relations) {
+			triplesString.append("<");
+			triplesString.append(relation.getSubj().getText().replace(" ", "_"));
+			triplesString.append(">");
+			triplesString.append(" ");
+			triplesString.append("<");
+			triplesString.append(relation.getType().replace(" ", "_"));
+			triplesString.append(">");
+			triplesString.append(" ");
+			triplesString.append("<");
+			triplesString.append(relation.getObj().getText().replace(" ", "_"));
+			triplesString.append(">");
+			triplesString.append(" .");
+			triplesString.append("\n");
 		}
 
+		LOGGER.info("Insert query=" + triplesString.toString());
 		UpdateRequest update = UpdateFactory.create("INSERT DATA { " + triplesString.toString() + "}");
 		UpdateProcessor processor = UpdateExecutionFactory.createRemote(update,
 				configService.getKnowledgeBaseServerUrl() + "/update");

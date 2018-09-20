@@ -1,65 +1,62 @@
 package com.brainext.core.kb;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 /**
- * An Entity stored in a Knowledge base
+ * Entity object
  * 
  * @author cpetroaca
  *
  */
 public class Entity {
+	public static final String NO_TYPE = "";
+	
 	/**
-	 * Value of the entity
+	 * Entity text
 	 */
-	private String value;
+	private String text;
 
 	/**
-	 * Map of entity relations. Key is id of property and value is a set of
-	 * property values
+	 * Entity type
 	 */
-	private Map<String, Set<Entity>> relations;
+	private String type;
 
-	public Entity(String value) {
-		this(value, Collections.emptyMap());
+	public Entity() {
 	}
 
-	public Entity(String value, Map<String, Set<Entity>> relations) {
-		if (value == null || value.isEmpty()) {
-			throw new IllegalArgumentException("value cannot be null or empty");
+	public Entity(String text) {
+		this(text, NO_TYPE);
+	}
+	
+	public Entity(String text, String type) {
+		if (text == null || text.isEmpty()) {
+			throw new IllegalArgumentException("text cannot be null or empty");
 		}
 
-		this.value = value;
-		this.relations = relations;
+		this.text = text;
+		this.type = type;
 	}
 
 	/**
 	 * 
-	 * @return get value of entity
+	 * @return get text of entity
 	 */
-	public String getValue() {
-		return value;
+	public String getText() {
+		return text;
 	}
 
 	/**
-	 * Get relations
 	 * 
-	 * @param propertyName
-	 * @return
+	 * @return the entity type
 	 */
-	public Map<String, Set<Entity>> getRelations() {
-		return new HashMap<>(relations);
+	public String getType() {
+		return type;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + value.hashCode();
-		result = prime * result + relations.hashCode();
+		result = prime * result + text.hashCode();
+		result = prime * result + type.hashCode();
 		return result;
 	}
 
@@ -74,17 +71,17 @@ public class Entity {
 
 		Entity other = (Entity) obj;
 
-		return (value.equals(other.value)) && (relations.equals(other.relations));
+		return (text.equals(other.text)) && (type.equals(other.type));
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Value=");
-		sb.append(value);
+		sb.append("Text=");
+		sb.append(text);
 		sb.append(", ");
-		sb.append("Relations=");
-		sb.append(relations);
+		sb.append("Type=");
+		sb.append(type);
 
 		return sb.toString();
 	}

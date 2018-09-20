@@ -11,7 +11,7 @@ import java.util.Collection;
 public interface KnowledgeBaseService {
 	public Entity getEntity(String id);
 	
-	public Collection<Entity> getEntities();
+	public Collection<Relation> getRelations();
 	
-	public void insertEntity(Entity entity);
+	public void insertRelations(Collection<Relation> relations);
 }

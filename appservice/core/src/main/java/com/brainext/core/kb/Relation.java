@@ -1,24 +1,25 @@
-package com.brainext.core.nlp;
+package com.brainext.core.kb;
 
 /**
- * Relation transfer object from Nlp service
+ * Relation object
+ * 
  * @author cpetroaca
  *
  */
-public class RelationDto {
+public class Relation {
 	/**
 	 * The type of relation
 	 */
 	private String type;
 
-	private EntityDto subj;
+	private Entity subj;
 
-	private EntityDto obj;
+	private Entity obj;
 
-	public RelationDto() {
+	public Relation() {
 	}
 
-	public RelationDto(String type, EntityDto subj, EntityDto obj) {
+	public Relation(String type, Entity subj, Entity obj) {
 		if (type == null || type.isEmpty()) {
 			throw new IllegalArgumentException("type cannot be null or empty");
 		}
@@ -48,7 +49,7 @@ public class RelationDto {
 	 * 
 	 * @return relation subject
 	 */
-	public EntityDto getSubj() {
+	public Entity getSubj() {
 		return subj;
 	}
 
@@ -56,7 +57,7 @@ public class RelationDto {
 	 * 
 	 * @return relation object
 	 */
-	public EntityDto getObj() {
+	public Entity getObj() {
 		return obj;
 	}
 
@@ -79,7 +80,7 @@ public class RelationDto {
 		if (getClass() != obj.getClass())
 			return false;
 
-		RelationDto other = (RelationDto) obj;
+		Relation other = (Relation) obj;
 
 		return (type.equals(other.type)) && (subj.equals(other.subj)) && (obj.equals(other.obj));
 	}
